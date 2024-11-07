@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Rows: #{query.rows}, Columns: #{query.cols}
+
+  - var rows = Number(query.rows)
+  - var cols = Number(query.cols)
+
+  - if (!Number.isInteger(rows) || !Number.isInteger(cols))
+    p Invalid input: Rows and Columns must be integers.
+  - else if (rows < 3 || rows > 13)
+    p Rows must be between 3 and 13.
+  - else if (cols < 3 || cols > 13)
+    p Columns must be between 3 and 13.
+  - else
+    table#outer
+      - for (var i = 0; i < rows; i++) {
+        tr#middle
+          - for (var j = 0; j < cols; j++) {
+            td= i * i + j
+          - }
+      - }
