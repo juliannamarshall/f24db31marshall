@@ -10,8 +10,21 @@ exports.animal_view_all_Page = async function(req, res){
     }
 };
 
-exports.animal_detail = function(req, res){
-    res.send('NOT IMPLEMENTED: Animal detail: ' + req.params.id);
+exports.animal_detail = async function(req, res){
+    console.log("detail" + req.params.id);
+    try{
+        const result = await Animal.findById(req.params.id);
+        if(result){
+            res.send(result);
+        }
+        else{
+            res.status(404);
+            res.send(`{"error": "Animal with id ${req.params.id} not found"}`);
+        }
+    } catch(err){
+        res.status(500);
+        res.send(`{"error": "Document for id ${req.params.id} not found"}`);
+    }
 };
 
 exports.animal_create_post = async function(req, res){

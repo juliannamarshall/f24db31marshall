@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  - var results = [{species: "Lion", habitat: "Savannah", lifespan: 12}, {species: "Penguin", habitat: "Antartic", lifespan: 15}, {species: "Elephant", habitat: "Grasslands", lifespan: 60}]
-  .container-fluid 
-    .row 
-      each animal in results 
-        .col-sm-2 
-          h3= animal.species 
-          p Habitat:  #{animal.habitat}
-          p Lifespan:  #{animal.lifespan}
+  h1 Animal List
+  ul 
+    each animal in results 
+      li 
+        h2= animal.species
+        p Habitat:  #{animal.habitat}
+        p Lifespan:  #{animal.lifespan}
+
+          
