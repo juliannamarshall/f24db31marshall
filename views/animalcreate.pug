@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1= title
+
+  form(id='AnimalForm', action="/resource/animal", method="POST")
+    div.form-group
+      label.animalAttr(for='species') Animal Species
+      input#species(type='text', name='species')
+      
+    div.form-group
+      label.animalAttr(for='habitat') Animal Habitat
+      input#species(type='text', name='habitat')
+      
+    div.form-group
+      label.animalAttr(for='lifespan') Animal Lifespan
+      input#lifespan(type='number', name='lifespan')
+    
+    input(type="submit")
+
+  script.
+    document.forms['CostumeForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Save succeeded");
+      }).catch((error) => {
+        alert("Save failed " + error);
+      });
+    });
