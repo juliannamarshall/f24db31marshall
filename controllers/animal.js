@@ -116,5 +116,15 @@ exports.animal_update_Page = async function (req, res) {
     } catch (err) {
       res.status(500).send(`Error: ${err}`);
     }
-  };
-  
+};
+
+exports.animal_delete_Page = async function(req, res){
+    console.log("Delete view for id " + req.query.species);
+    try{
+        result = await Animal.findOne({ species: req.query.species });
+        res.render('animaldelete', {title: 'Animal Delete', toShow: result});
+    } catch(err){
+        res.status(500);
+        res.send(`{'error': '${err}'}`);
+    }
+};

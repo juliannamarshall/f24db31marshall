@@ -1,0 +1,47 @@
+extends layout
+
+block content
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to delete
+    else
+    - let animal_species = toShow.species
+    - let animal_habitat = toShow.habitat
+    - let animal_lifespan = toShow.lifespan
+    - let actionid = "/resource/animal/" + animal_species
+    
+    script let actionid = "#{actionid}"
+    div
+        div.row
+            div(class='animalAttr mr-3') Animal Species is:
+            div #{animal_species}
+        div.row
+            div(class='animalAttr mr-3') Animal Habitat is:
+            div #{animal_habitat}
+        div.row
+            div(class='animalAttr mr-3') Animal Lifespan is:
+            div #{animal_lifespan}
+
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+    script.
+        function cancel() {
+            window.location.href='/costumes'
+        }
+
+    script.
+        function deleteOnid() {
+            console.log("starting delete")
+            fetch(actionid, {
+                method: 'DELETE'
+            }).then((resp) => {
+                return resp.json();
+            }).then((body) => {
+                alert("Delete succeded")
+                window.location.href='/costumes'
+            }).catch((error) => {
+                alert("Delete failed " + error )
+            });
+        }
