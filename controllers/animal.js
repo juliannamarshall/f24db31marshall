@@ -55,27 +55,27 @@ exports.animal_delete = async function(req, res){
     }
 };
 
-exports.animal_update_put = async function(req, res){
-    console.log(`update on id ${req.params.species} with body ${JSON.stringify(req.body)}`);
-    try{
+exports.animal_update_put = async function(req, res) {
+    console.log(`Update on species ${req.params.species} with body ${JSON.stringify(req.body)}`);
+    try {
         let toUpdate = await Animal.findOne({ species: req.params.species });
-        if(req.body.species){
-            toUpdate.species = req.body.species;
+        if (!toUpdate) {
+            return res.status(404).send(`Animal with species ${req.params.species} not found`);
         }
-        if(req.body.habitat){
-            toUpdate.habitat = req.body.habitat;
-        }
-        if(req.body.lifespan){
-            toUpdate.lifespan = req.body.lifespan;
-        }
+
+        if (req.body.species) toUpdate.species = req.body.species;
+        if (req.body.habitat) toUpdate.habitat = req.body.habitat;
+        if (req.body.lifespan) toUpdate.lifespan = req.body.lifespan;
+
         let result = await toUpdate.save();
-        console.log("Success " + result);
-        res.send(result); 
-    } catch(err){
-        res.status(500);
-        res.send(`{"error": ${err}: Update for id ${req.params.species} failed}`);
+        console.log("Success", result);
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(`{"error": "${err}: Update for species ${req.params.species} failed"}`);
     }
 };
+
+
 
 exports.animal_view_one_Page = async function(req, res) {
     console.log("Single view for species: " + req.query.species);
@@ -103,3 +103,18 @@ exports.animal_create_Page = function(req, res){
         res.send(`{'error': '${err}'}`);
     }
 };
+
+exports.animal_update_Page = async function (req, res) {
+    console.log("Update view for item " + req.query.species);
+    try {
+      let result = await Animal.findOne({ species: req.query.species });
+      if (result) {
+        res.render('animalupdate', { title: 'Update Animal', toShow: result });
+      } else {
+        res.status(404).send(`Animal with species ${req.query.species} not found`);
+      }
+    } catch (err) {
+      res.status(500).send(`Error: ${err}`);
+    }
+  };
+  
