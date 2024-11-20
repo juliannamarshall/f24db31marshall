@@ -77,13 +77,20 @@ exports.animal_update_put = async function(req, res){
     }
 };
 
-exports.animal_view_One_Page = async function(req, res){
-    console.log("Single view for id" + req.query.species);
-    try{
-        result = await Animal.findOne({ species: req.query.species });
-        res.render('animaldetail', {title: 'Animal Detail', toShow: result});
-    } catch(err){
-        res.status(500);
-        res.send(`{"error": ${err}}`);
+exports.animal_view_one_Page = async function(req, res) {
+    console.log("Single view for species: " + req.query.species);
+    try {
+        const result = await Animal.findOne({ species: req.query.species });
+        if (!result) {
+            console.log(`No animal found with species: ${req.query.species}`);
+            res.status(404).send(`{"error": "Animal with species ${req.query.species} not found"}`);
+        } else {
+            console.log("Database result:", result);
+            res.render('animaldetail', { title: 'Animal Detail', toShow: result });
+        }
+    } catch (err) {
+        console.log("Error fetching animal:", err);
+        res.status(500).send(`{"error": ${err}}`);
     }
-}
+};
+

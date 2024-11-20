@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h1= title
+
+    div
+        div.row
+            div(class='animalAttr mr-3') Animal Species is:
+            div #{toShow.species}
+        div.row
+            div(class='animalAttr mr-3') Animal Habitat is:
+            div #{toShow.habitat}
+        div.row
+            div(class='animalAttr mr-3') Animal Lifespan is:
+            div #{toShow.lifespan}
+
