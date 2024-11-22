@@ -1,12 +1,16 @@
 extends layout
 
 block content
-  h1 Animal List
-  ul 
-    each animal in results 
-      li 
-        h2= animal.species
-        p Habitat:  #{animal.habitat}
-        p Lifespan:  #{animal.lifespan}
-
-          
+  h1= title
+  - let animals = results;
+  div(class="container-fluid")
+    div(class="row m-1")
+      each animal in animals
+        - let destination = `dispatch(\"/resource/animal/update?species=${animal.species}\")`
+        div(class="row-sm-2", class="m-1") Animal #{animal.species} lives in #{animal.habitat} for #{animal.lifespan} years
+          button.btn(class="btn-primary ml-1", onclick=destination) Update 
+  
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }

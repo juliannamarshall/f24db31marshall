@@ -28,7 +28,7 @@ block content
 
     script.
         function cancel() {
-            window.location.href='/costumes'
+            window.location.href='/animal'
         }
 
     script.
@@ -40,7 +40,7 @@ block content
                 return resp.json();
             }).then((body) => {
                 alert("Delete succeded")
-                window.location.href='/costumes'
+                window.location.href='/animal'
             }).catch((error) => {
                 alert("Delete failed " + error )
             });
