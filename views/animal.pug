@@ -4,11 +4,20 @@ block content
   h1= title
   - let animals = results;
   div(class="container-fluid")
+    - let destination2 = `dispatch(\"/resource/animal/create\")`
+    button.btn(class="btn-primary ml-1", onclick=destination2) Create
     div(class="row m-1")
       each animal in animals
-        - let destination = `dispatch(\"/resource/animal/update?species=${animal.species}\")`
+        - let destination1 = `dispatch(\"/resource/animal/update?species=${animal.species}\")`
+        - let destination3 = `dispatch(\"/resource/animal/detail?species=${animal.species}\")`
+        - let destination4 = `dispatch(\"/resource/animal/delete?species=${animal.species}\")`
+
         div(class="row-sm-2", class="m-1") Animal #{animal.species} lives in #{animal.habitat} for #{animal.lifespan} years
-          button.btn(class="btn-primary ml-1", onclick=destination) Update 
+          button.btn(class="btn-primary ml-1", onclick=destination1) Update 
+          button.btn(class="btn-primary ml-1", onclick=destination3) Detail
+          button.btn(class="btn-primary ml-1", onclick=destination4) Delete
+
+
   
   script.
     function dispatch(path){
